@@ -2,7 +2,8 @@
 
 ## Description:
 
-Configurable general purpose prometheus exporter for MQTT
+Configurable general purpose prometheus exporter for MQTT.
+
 Subscribes to one or more MQTT topics, and lets you configure prometheus metrics based on pattern matching.
 
 See exampleconf/metric_example.yaml for details.
