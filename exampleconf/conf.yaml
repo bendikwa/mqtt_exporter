@@ -1,0 +1,27 @@
+#Config file for MQTT prometheus exporter
+
+#Logging
+#logging:
+#  logfile:  ''                                     # Optional default '' (stdout)
+#  level:    'info'                                 # Optional default 'info'
+
+#MQTT All values default to paho.mqtt.client defaults
+#mqtt:
+#  host:       'mqtt.example.com'                   # Optional default 'localhost'
+#  port:       1883                                 # Optional
+#  keepalive:  60                                   # Optional
+#  auth:                                            # Optional If included, username_pw_set() is called with user/password
+#    username: 'user'                               # Required (when auth is present)
+#    password: 'pass'                               # Optional
+#  tls:                                              # Optional If included, tls_set() is called with the following:
+#    ca_certs:                                      # Optional
+#    certfile:                                      # Optional
+#    keyfile:                                       # Optional
+#    cert_reqs:                                     # Optional
+#    tls_version:                                   # Optional
+#    ciphers:                                       # Optional
+
+
+#Prometheus
+#prometheus:
+#  exporter_port:                                   # Optional default 9344

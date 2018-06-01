@@ -1,0 +1,20 @@
+# Example metric definition
+metrics:
+  - name:     'mqtt_example'                        # Required(unique, if multiple, only last entry is kept)
+    help:     'MQTT example gauge'                  # Required
+    type:     'gauge'                               # Required ('gauge', 'counter', 'summary' or 'histogram')
+    #buckets:  '.1, 1.0, 10.0, inf'                 # Optional (Passed as 'buckets' argument to Histogram)
+    topic:    'example/topic/+'                       # Required
+
+    # Inspired by 'https://prometheus.io/docs/operating/configuration/#<relabel_config>'
+    # "__msg_topic__" and "__value__" are populated with msg topic and value. And "__topic__" is 'topic' from config.
+    # Supported actions are: 'replace', 'keep' and 'drop'
+    # All labels starting with "__" will be removed, and "__topic__" and "__value__" is copied into "topic" anv "value"
+    # after all label configs have been applied.
+    label_configs:                                  # Optional
+      - source_labels:  ['__msg_topic__']           # Required (when label_configs is present)
+        separator:      '/'                         # Optional default ';'
+        regex:          '(.*)'                      # Optional default '(.*)'
+        target_label:   '__topic__'                   # Required (when label_configs is present and 'action' = 'replace')
+        replacement:    '\1'                        # Optional default '\1'
+        action:         'replace'                   # Optional default 'replace'

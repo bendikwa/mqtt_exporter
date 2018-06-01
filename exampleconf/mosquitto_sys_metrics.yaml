@@ -1,0 +1,64 @@
+#Config file for Mosquitto broker system metrics
+
+# Metric definitions
+metrics:
+  - name:     'mqtt_broker'
+    help:     'System events from broker'
+    type:     'gauge'
+    topic:    '$SYS/broker/#'
+
+    label_configs:
+      - source_labels:  ['__msg_topic__']
+        target_label:   '__topic__'
+      - source_labels:  ['__value__']
+        regex:          '^(\d+([,.]\d*)?)$|^([,.]\d+)$'
+        action:         'keep'
+
+  - name:     'mqtt_broker_version'
+    help:     'Mosquitto version (static)'
+    type:     'gauge'
+    topic:    '$SYS/broker/version'
+
+    label_configs:
+      - source_labels:  ['__msg_topic__']
+        target_label:   '__topic__'
+      - source_labels:  ['__value__']
+        regex:          '^\D+((\d+[\.]?)+)$'
+        target_label:   'version'
+        action:         'replace'
+      - source_labels:  ['__value__']
+        replacement:        '1'
+        target_label:   '__value__'
+        action:         'replace'
+
+  - name:     'mqtt_broker_changeset'
+    help:     'Mosquitto build changeset (static)'
+    type:     'gauge'
+    topic:    '$SYS/broker/changeset'
+
+    label_configs:
+      - source_labels:  ['__msg_topic__']
+        target_label:   '__topic__'
+      - source_labels:  ['__value__']
+        target_label:   'changeset'
+        action:         'replace'
+      - source_labels:  ['__value__']
+        replacement:        '1'
+        target_label:   '__value__'
+        action:         'replace'
+
+  - name:     'mqtt_broker_timestamp'
+    help:     'Mosquitto build timestamp (static)'
+    type:     'gauge'
+    topic:    '$SYS/broker/timestamp'
+
+    label_configs:
+      - source_labels:  ['__msg_topic__']
+        target_label:   '__topic__'
+      - source_labels:  ['__value__']
+        target_label:   'timestamp'
+        action:         'replace'
+      - source_labels:  ['__value__']
+        replacement:        '1'
+        target_label:   '__value__'
+        action:         'replace'
