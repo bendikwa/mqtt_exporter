@@ -10,6 +10,8 @@ import os
 import re
 import operator
 import time
+import signal
+import sys
 from yamlreader import yaml_load
 
 VERSION = '1.1'
@@ -397,6 +399,12 @@ def _get_sorted_tuple_list(source):
     return sorted_tuple_list
 
 
+def _signal_handler(sig, frame):
+    # pylint: disable=E1101
+    logging.info('Received {0}'.format(signal.Signals(sig).name))
+    sys.exit(0)
+
+
 def main():
     add_static_metric(int(time.time() * 1000))
     # Setup argument parsing
@@ -408,6 +416,7 @@ def main():
 
     # Initial logging to console
     _log_setup({'logfile': '', 'level': 'info'})
+    signal.signal(signal.SIGINT, _signal_handler)
 
     # Read config file from disk
     from_file = _read_config(options.config)
