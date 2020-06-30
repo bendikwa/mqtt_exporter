@@ -90,7 +90,7 @@ def parse_and_validate_metric_config(metric, metrics):
         label_configs = []
         for lc in m['label_configs']:
             if lc:
-                lc = _add_config_and_defaults(lc, {'separator': ';', 'regex': '(.*)', 'replacement': '\\1',
+                lc = _add_config_and_defaults(lc, {'separator': ';', 'regex': '^(.*)$', 'replacement': '\\1',
                                                    'action': 'replace'})
                 if lc['action'] == 'replace':
                     _validate_required_fields(lc, None,
@@ -147,7 +147,7 @@ def _topic_matches(topic1, topic2):
     logging.debug(
         f'_topic_matches: Topic1: {topic1}, Topic2: {topic2}')
     topic1 = re.escape(topic1)
-    regex = topic1.replace('\\/\\#', '.*$').replace('\\+', '[^/]+')
+    regex = topic1.replace('/\\#', '.*$').replace('\\+', '[^/]+')
     match = re.match(regex, topic2)
 
     logging.debug(f'_topic_matches: Match: {match is not None}')
